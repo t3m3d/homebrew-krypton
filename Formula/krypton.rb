@@ -15,11 +15,13 @@ class Krypton < Formula
     # kcc and kcc.sh resolve symlinks to find their sibling files in libexec,
     # so symlinking them into bin is enough — headers, compiler, bootstrap all
     # stay in libexec and are found automatically.
-    bin.install_symlink libexec/"kcc"
-    bin.install_symlink libexec/"kcc.sh"
+    # kcc.sh is the full pipeline driver — symlink it as kcc (no .sh)
+    # so users run `kcc file.k` like any real compiler.
+    # The internal kcc dispatcher stays in libexec and is found via SCRIPT_DIR.
+    bin.install_symlink libexec/"kcc.sh" => "kcc"
 
     # krypton alias matches the Chocolatey package name on Windows
-    bin.install_symlink libexec/"kcc" => "krypton"
+    bin.install_symlink libexec/"kcc.sh" => "krypton"
   end
 
   test do
@@ -28,7 +30,7 @@ class Krypton < Formula
         kp("hello from krypton")
       }
     KRYPTON
-    output = shell_output("#{bin}/kcc.sh #{testpath}/hello.k -o #{testpath}/hello && #{testpath}/hello")
+    output = shell_output("#{bin}/kcc #{testpath}/hello.k -o #{testpath}/hello && #{testpath}/hello")
     assert_includes output, "hello from krypton"
   end
 end
