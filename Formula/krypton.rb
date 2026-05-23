@@ -5,8 +5,8 @@ class Krypton < Formula
   license "MIT"
 
   on_arm do
-    url "https://github.com/t3m3d/krypton/releases/download/2.0.0/krypton-2.0.0-macos-arm64.tar.gz"
-    sha256 "f47ecd4e7d5572ea23eb73e9ca4e9e986daaef84d37e925a1c7485cbd393cf61"
+    url "https://github.com/t3m3d/krypton/releases/download/2.0.0/krypton-2.0-macos-arm64.tar.gz"
+    sha256 "5287837fc068de0281b1b2f229d1d7888ebca6e2548ed3bfcc3b60a76b05bf0d"
   end
 
   def install
