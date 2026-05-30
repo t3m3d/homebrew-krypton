@@ -10,7 +10,7 @@ class Krypton < Formula
     # fromCharCode fix + the actual stdlib (the 2.0.0 tarball shipped
     # without stdlib/ and forced users into the C:\krypton workaround).
     url "https://github.com/t3m3d/krypton/releases/download/2.1.1/krypton-2.1.1-macos-arm64.tar.gz"
-    sha256 "b92f161ae05710b1d4e7d19a0b69b601990c6d217650c058771fe702b96537e4"
+    sha256 "e988b10b6a46d1f55119ac3ef276fe9344f83aa91e55a1c1608db8d99eaece7a"
   end
 
   def install
