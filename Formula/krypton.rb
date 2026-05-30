@@ -10,7 +10,7 @@ class Krypton < Formula
     # fromCharCode fix + the actual stdlib (the 2.0.0 tarball shipped
     # without stdlib/ and forced users into the C:\krypton workaround).
     url "https://github.com/t3m3d/krypton/releases/download/2.1.1/krypton-2.1.1-macos-arm64.tar.gz"
-    sha256 "e988b10b6a46d1f55119ac3ef276fe9344f83aa91e55a1c1608db8d99eaece7a"
+    sha256 "87744b8d998c86bd32ae9e592ae5817ac34b509c0df090b1a7a634b0fe0cf871"
   end
 
   def install
@@ -27,10 +27,9 @@ class Krypton < Formula
     # krypton alias matches the Chocolatey package name on Windows
     bin.install_symlink libexec/"kcc.sh" => "krypton"
 
-    # 2.1.1: kweb (Krypton Web Framework CLI) ships as part of the same
-    # package. Subcommands: `kweb init <name>`, `kweb build`, `kweb serve`,
-    # `kweb deploy`. The binary is pre-compiled in the tarball under
-    # libexec/web/kweb (built from web/kweb.htk) and symlinked into bin.
+    # 2.1.1: kweb is Windows-only this release. Mac port of stdlib/fs.k
+    # required first (it has ungated FindFirstFileA / WIN32_FIND_DATAA
+    # calls that don't compile under clang). Deferred to 2.1.2.
     if (libexec/"web/kweb").exist?
       bin.install_symlink libexec/"web/kweb" => "kweb"
     end
