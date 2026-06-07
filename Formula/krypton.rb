@@ -1,38 +1,48 @@
 class Krypton < Formula
-  desc "Krypton programming language compiler and toolchain"
+  desc "Programming language compiler and toolchain"
   homepage "https://github.com/t3m3d/krypton"
-  version "2.1.1"
+  # 2.3.0: fully clang-free, self-hosting. Ships the Krypton-native driver
+  # (kcc.ks -> kcc_driver_macos_aarch64) + frontend + macho_host backend +
+  # stdlib + headers. kcc.sh was removed; the C path (--c/--gcc/--llvm) is gone.
+  # Apple Silicon only — the tarball bundles arm64 Mach-O binaries.
+  url "https://github.com/t3m3d/krypton/releases/download/2.3.0/krypton-2.3.0-macos-arm64.tar.gz"
+  version "2.3.0"
+  sha256 "84e22fd001526621fbb10ca5ed749356eba86b7d452720d653c42d6722948f0d"
   license "MIT"
 
-  on_arm do
-    # 2.1.1: stdlib + headers + kcc-arm64 + kcc.sh + bootstrap, tarball.
-    # Bumped from 2.0.0 to ship the KRYPTON_ROOT install fix + UTF-8
-    # fromCharCode fix + the actual stdlib (the 2.0.0 tarball shipped
-    # without stdlib/ and forced users into the C:\krypton workaround).
-    url "https://github.com/t3m3d/krypton/releases/download/2.1.1/krypton-2.1.1-macos-arm64.tar.gz"
-    sha256 "87744b8d998c86bd32ae9e592ae5817ac34b509c0df090b1a7a634b0fe0cf871"
-  end
+  depends_on arch: :arm64
+  depends_on :macos
 
   def install
     libexec.install Dir["*"]
 
-    # kcc and kcc.sh resolve symlinks to find their sibling files in libexec,
-    # so symlinking them into bin is enough — headers, compiler, bootstrap,
-    # stdlib all stay in libexec and are found via KRYPTON_ROOT (set by kcc.sh
-    # from $SCRIPT_DIR; see compile.k 2.1.1 changes).
-    # kcc.sh is the full pipeline driver — symlink it as kcc (no .sh)
-    # so users run `kcc file.k` like any real compiler.
-    bin.install_symlink libexec/"kcc.sh" => "kcc"
-
-    # krypton alias matches the Chocolatey package name on Windows
-    bin.install_symlink libexec/"kcc.sh" => "krypton"
-
-    # 2.1.1: kweb is Windows-only this release. Mac port of stdlib/fs.k
-    # required first (it has ungated FindFirstFileA / WIN32_FIND_DATAA
-    # calls that don't compile under clang). Deferred to 2.1.2.
-    if (libexec/"web/kweb").exist?
-      bin.install_symlink libexec/"web/kweb" => "kweb"
+    # Ad-hoc sign the arm64 Mach-O binaries so AMFI lets them run. This also
+    # bumps their mtimes above the .k sources, so the driver's ensureHost()
+    # treats macho_host as up-to-date and skips its one-time clang rebuild.
+    %w[
+      bootstrap/kcc_driver_macos_aarch64
+      compiler/macos_arm64/kcc-arm64
+      compiler/macos_arm64/macho_host
+      compiler/macos_arm64/kls
+    ].each do |rel|
+      f = libexec/rel
+      system "codesign", "-s", "-", "-f", f.to_s if f.exist?
     end
+
+    # `kcc` is the kcc.ks-built driver; it finds stdlib/compiler/backend via
+    # $KRYPTON_ROOT. Homebrew installs to libexec (not /usr/local/krypton), so
+    # wrap the driver to point KRYPTON_ROOT at libexec. `krypton` is an alias
+    # (matches the package name on Windows).
+    %w[kcc krypton].each do |name|
+      (bin/name).write <<~SH
+        #!/bin/bash
+        export KRYPTON_ROOT="#{libexec}"
+        exec "#{libexec}/bootstrap/kcc_driver_macos_aarch64" "$@"
+      SH
+      (bin/name).chmod 0755
+    end
+
+    bin.install_symlink libexec/"compiler/macos_arm64/kls" => "kls" if (libexec/"compiler/macos_arm64/kls").exist?
   end
 
   test do
@@ -43,5 +53,7 @@ class Krypton < Formula
     KRYPTON
     output = shell_output("#{bin}/kcc #{testpath}/hello.k -o #{testpath}/hello && #{testpath}/hello")
     assert_includes output, "hello from krypton"
+
+    assert_match "2.3.0", shell_output("#{bin}/kcc --version")
   end
 end
