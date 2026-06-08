@@ -9,7 +9,7 @@ cask "kryoterm" do
 
   depends_on arch: :arm64
 
-  app "kryoterm.app"
+  app "kryoterm.app", target: "/Applications/Utilities/kryoterm.app"
 
   caveats <<~EOS
     kryoterm.app is ad-hoc signed (not notarized). First launch:
