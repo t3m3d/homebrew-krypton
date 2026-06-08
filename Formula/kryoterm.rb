@@ -5,7 +5,7 @@ class Kryoterm < Formula
   # dep) + a thin Obj-C/Cocoa window shim. Apple Silicon only.
   url "https://github.com/t3m3d/kryoterm/releases/download/1.1.0/kryoterm-1.1.0-macos-arm64.tar.gz"
   version "1.1.0"
-  sha256 "f3659301c7febbad7f5948c05c389929dff98286f2a04812a18efdc1a2e94a0b"
+  sha256 "78fc1abe72c029fb06b71787b71df58ce53277e7b5a6a8129a384d02d58d0987"
   license "MIT"
 
   depends_on arch: :arm64
