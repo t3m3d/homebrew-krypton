@@ -1,6 +1,6 @@
 cask "kryoterm" do
-  version "1.2.0"
-  sha256 "3f35953df3ea9931402f5f3f4459d016642b0b0650e89c28a5a84991b05bf4a2"
+  version "1.3.0"
+  sha256 "89db7f0b5dc5173da61b6d313e92cd51f61d31d48b8aeb33351249fd4c7ba355"
 
   url "https://github.com/t3m3d/kryoterm/releases/download/#{version}/kryoterm-#{version}-macos.app.zip"
   name "kryoterm"
