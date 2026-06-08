@@ -7,7 +7,7 @@ class Krypton < Formula
   # Apple Silicon only — the tarball bundles arm64 Mach-O binaries.
   url "https://github.com/t3m3d/krypton/releases/download/2.3.0/krypton-2.3.0-macos-arm64.tar.gz"
   version "2.3.0"
-  sha256 "84e22fd001526621fbb10ca5ed749356eba86b7d452720d653c42d6722948f0d"
+  sha256 "bb69de16294a9b54e746a93c82115ccf3fb768bcef9193b367400dd90fac1faf"
   license "MIT"
 
   depends_on arch: :arm64
