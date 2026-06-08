@@ -3,9 +3,9 @@ class Kryoterm < Formula
   homepage "https://github.com/t3m3d/kryoterm"
   # Self-contained: a native Mach-O engine (built from Krypton, no runtime krypton
   # dep) + a thin Obj-C/Cocoa window shim. Apple Silicon only.
-  url "https://github.com/t3m3d/kryoterm/releases/download/1.1.0/kryoterm-1.1.0-macos-arm64.tar.gz"
-  version "1.1.0"
-  sha256 "0b24490b59313834b62825eb12827db4e22d35b693a613b308fff7a62df14931"
+  url "https://github.com/t3m3d/kryoterm/releases/download/1.2.0/kryoterm-1.2.0-macos-arm64.tar.gz"
+  version "1.2.0"
+  sha256 "c5d5658f79bc48fbf07768ca21b97cf0f3fda7dfccd90dc009acbd55200f6c5e"
   license "MIT"
 
   depends_on arch: :arm64
