@@ -1,6 +1,6 @@
 cask "kcode" do
   version "0.3.0"
-  sha256 "99876f6ec09dc5af08a207331356f6c82fa72d41de5441f6445b2ca2ac239e7f"
+  sha256 "e5a980c763e395f22aaa418ba720a37da556d5d329645ac2db6dd346c1a2b01b"
 
   url "https://github.com/t3m3d/kcode/releases/download/#{version}/kcode-#{version}-macos.app.zip"
   name "kcode"
