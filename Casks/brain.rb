@@ -1,6 +1,6 @@
 cask "brain" do
-  version "0.9.2"
-  sha256 "8f7a784b6b7e06d29ef0dcb4300286e666a3273f316887d5e47204f313e13ae0"
+  version "0.10.0"
+  sha256 "d041a56abc1e6acabf4fdfa2d51eccb7ae94d36ee190b1254af615194086c688"
 
   url "https://github.com/t3m3d/brain/releases/download/#{version}/brain-#{version}.dmg"
   name "brain"
