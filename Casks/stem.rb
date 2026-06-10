@@ -1,6 +1,6 @@
 cask "stem" do
-  version "0.2.2"
-  sha256 "be471cc57cde41db07a959e56613b00a435388cb6178a1105d0d1e1a48f70eec"
+  version "0.2.3"
+  sha256 "56789147553b9f38a12666469463eccf1c7a5a6713b03bdafc7deb330aa9dc36"
 
   url "https://github.com/t3m3d/stem/releases/download/#{version}/stem-#{version}-macos.app.zip"
   name "stem"
