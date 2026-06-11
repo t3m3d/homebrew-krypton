@@ -19,7 +19,7 @@ class Krypton < Formula
 
   on_linux do
     url "https://github.com/t3m3d/krypton/releases/download/2.3.0/krypton-2.3.0-linux-x86_64.tar.gz"
-    sha256 "e96dabbdcfa2d09c48ad5ba930883aa289dffc62d4458b29fab2e45be716a3ce"
+    sha256 "c0a7c7dac309589e1148fd2cc4861e96790a289330f63ccf8a2214bcd6e81032"
   end
 
   def install
