@@ -1,6 +1,6 @@
 cask "stem" do
-  version "0.11.10"
-  sha256 "8ffc5ffdffecac0057c27b6d4710c76664bab9ae2d832fe49bcd712d6a058364"
+  version "0.11.11"
+  sha256 "4a790f5fb0430f3774a6ed7b3cac781b0166c5b58fb41f82b4b26dc8cf4c9277"
 
   url "https://github.com/t3m3d/stem/releases/download/#{version}/stem-#{version}.dmg"
   name "stem"
