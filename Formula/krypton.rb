@@ -2,12 +2,12 @@ class Krypton < Formula
   desc "Programming language compiler and toolchain"
   homepage "https://github.com/t3m3d/krypton"
   # macOS is 2.4.1; Linux stays on 2.3.0 until its matching artifact is cut.
-  version "2.4.1"
+  # No global version: Homebrew infers the version from the selected OS URL.
   license "MIT"
 
   on_macos do
-    url "https://github.com/t3m3d/krypton/releases/download/2.4.1/krypton-2.4.1-macos-arm64.tar.gz"
-    sha256 "e2c2750514ddbacad6cd724bec02e976b0c0d0d3dce1f306d6a2288776b06295"
+    url "https://github.com/t3m3d/krypton/releases/download/2.4.2/krypton-2.4.2-macos-arm64.tar.gz"
+    sha256 "a9eac01dbc00d70bfef34f89cf13c564f09056634fe1f7171b07704ae6ea6470"
     depends_on arch: :arm64
   end
 
@@ -68,7 +68,7 @@ class Krypton < Formula
     output = shell_output("#{bin}/kcc #{testpath}/hello.k -o #{testpath}/hello && #{testpath}/hello")
     assert_includes output, "hello from krypton"
 
-    expected = OS.mac? ? "2.4.1" : "2.3.0"
+    expected = OS.mac? ? "2.4.2" : "2.3.0"
     assert_match expected, shell_output("#{bin}/kcc --version")
   end
 end
