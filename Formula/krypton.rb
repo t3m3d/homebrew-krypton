@@ -3,6 +3,7 @@ class Krypton < Formula
   homepage "https://github.com/t3m3d/krypton"
   # macOS is 2.4.4; Linux stays on 2.3.0 until its matching artifact is cut.
   version "2.4.4"
+  revision 1
   license "MIT"
 
   on_macos do
@@ -54,8 +55,25 @@ class Krypton < Formula
       (bin/"kweb").chmod 0755
     end
 
+    if OS.mac? && (libexec/"apps/kweb.app").exist?
+      (bin/"kweb-gui").write <<~SH
+        #!/bin/bash
+        open "#{libexec}/apps/kweb.app" "$@"
+      SH
+      (bin/"kweb-gui").chmod 0755
+    end
+
     if (libexec/"compiler/macos_arm64/kls").exist?
       bin.install_symlink libexec/"compiler/macos_arm64/kls" => "kls"
+    end
+  end
+
+  def caveats
+    on_macos do
+      <<~EOS
+        Open the kweb GUI with:
+          kweb-gui
+      EOS
     end
   end
 
