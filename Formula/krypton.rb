@@ -1,18 +1,16 @@
 class Krypton < Formula
   desc "Programming language compiler and toolchain"
   homepage "https://github.com/t3m3d/krypton"
-  # macOS and Linux x86_64 are both 2.4.4. Windows remains on 2.3.0.
-  version "2.4.4"
-  revision 2
+  # macOS is 2.4.5. Linux x86_64 remains on 2.4.4. Windows remains on 2.3.0.
   license "MIT"
 
-  on_macos do
-    url "https://github.com/t3m3d/krypton/releases/download/2.4.4/krypton-2.4.4-macos-arm64.tar.gz"
-    sha256 "f7e90eee7d3778ffead2be0302b9bfb72c8f3be4c8890f44fa7c16093f15f7d9"
+  if OS.mac?
+    version "2.4.5"
+    url "https://github.com/t3m3d/krypton/releases/download/2.4.5/krypton-2.4.5-macos-arm64.tar.gz"
+    sha256 "b0b025bda28f330f1cfce642f8b578370630a1b651c360a6df207bac65b4fa0a"
     depends_on arch: :arm64
-  end
-
-  on_linux do
+  elsif OS.linux?
+    version "2.4.4"
     url "https://github.com/t3m3d/krypton/releases/download/2.4.4/krypton-2.4.4-linux-x86_64.tar.gz"
     sha256 "98f020363334c8166b1e7a6e617ba046d4505164862b9f0b95214c59b57b3dad"
   end
@@ -63,9 +61,7 @@ class Krypton < Formula
       (bin/"kweb-gui").chmod 0755
     end
 
-    if (libexec/"compiler/macos_arm64/kls").exist?
-      bin.install_symlink libexec/"compiler/macos_arm64/kls" => "kls"
-    end
+    bin.install_symlink libexec/"compiler/macos_arm64/kls" => "kls" if (libexec/"compiler/macos_arm64/kls").exist?
   end
 
   def caveats
@@ -86,6 +82,7 @@ class Krypton < Formula
     output = shell_output("#{bin}/kcc #{testpath}/hello.k -o #{testpath}/hello && #{testpath}/hello")
     assert_includes output, "hello from krypton"
 
-    assert_match "2.4.4", shell_output("#{bin}/kcc --version")
+    expected = OS.mac? ? "2.4.5" : "2.4.4"
+    assert_match expected, shell_output("#{bin}/kcc --version")
   end
 end
