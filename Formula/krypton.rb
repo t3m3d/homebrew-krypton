@@ -16,21 +16,10 @@ class Krypton < Formula
   def install
     libexec.install Dir["*"]
 
-    if OS.mac?
-      driver = "bootstrap/kcc_driver_macos_aarch64"
-      %w[
-        bootstrap/kcc_driver_macos_aarch64
-        compiler/macos_arm64/kcc-arm64
-        compiler/macos_arm64/macho_host
-        compiler/macos_arm64/kls
-        web/kweb
-        apps/kweb.app/Contents/MacOS/kweb
-      ].each do |rel|
-        f = libexec/rel
-        system "codesign", "-s", "-", "-f", f.to_s if f.exist?
-      end
+    driver = if OS.mac?
+      "bootstrap/kcc_driver_macos_aarch64"
     else
-      driver = "bootstrap/kcc_driver_linux_x86_64"
+      "bootstrap/kcc_driver_linux_x86_64"
     end
 
     %w[kcc krypton].each do |name|
