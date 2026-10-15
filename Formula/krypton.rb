@@ -1,12 +1,12 @@
 class Krypton < Formula
   desc "Programming language compiler and toolchain"
   homepage "https://github.com/t3m3d/krypton"
-  # macOS is 2.4.6. Linux x86_64 remains on 2.4.4. Windows remains on 2.3.0.
+  # macOS is 2.4.7. Linux x86_64 remains on 2.4.4. Windows remains on 2.3.0.
   license "MIT"
 
   if OS.mac?
-    url "https://github.com/t3m3d/krypton/releases/download/v2.4.6/krypton-2.4.6-macos-arm64.tar.gz"
-    sha256 "b784108e70bace923a4c5c4de06aae560db399ee0cb1ccd294b0e4b066e2a06a"
+    url "https://github.com/t3m3d/krypton/releases/download/v2.4.7/krypton-2.4.7-macos-arm64.tar.gz"
+    sha256 "404fc4c659f68f5b3dce65466d84ffa7988b936a0d34bc19795053a562faa124"
     depends_on arch: :arm64
   elsif OS.linux?
     url "https://github.com/t3m3d/krypton/releases/download/2.4.4/krypton-2.4.4-linux-x86_64.tar.gz"
@@ -80,7 +80,7 @@ class Krypton < Formula
     output = shell_output("#{bin}/kcc #{testpath}/hello.k -o #{testpath}/hello && #{testpath}/hello")
     assert_includes output, "hello from krypton"
 
-    expected = OS.mac? ? "2.4.6" : "2.4.4"
+    expected = OS.mac? ? "2.4.7" : "2.4.4"
     assert_match expected, shell_output("#{bin}/kcc --version")
   end
 end
